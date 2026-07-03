@@ -1,30 +1,37 @@
 import express from "express";
 import cors from "cors";
 import http from "http";
-import { devices, type device } from "./data/devices";
+import { devices } from "./data/devices";
 import { startSimulation } from "./simulation/simulation";
 import { Server } from "socket.io";
+import { getOfficeState } from "./data/office";
 
 const app = express();
 
 const server = http.createServer(app);
-const io = new Server(server)
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
+});
 
 app.use(cors());
 app.use(express.json());
 
-startSimulation();
+startSimulation(io);
 
 app.get("/", (_, res) => {
   res.send("Backend is running");
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
 
 app.get("/devices", (_, res) => {
     res.json(devices)
+})
+
+app.get("/office", (_, res) => {
+    res.json(getOfficeState());
 })
 
 const PORT = 4000;

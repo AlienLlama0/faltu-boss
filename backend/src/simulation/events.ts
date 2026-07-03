@@ -1,7 +1,7 @@
 import { devices } from "../data/devices";
-import type { room } from "../data/rooms";
+import { type Room } from "../data/rooms";
 
-function roomDevices(room: room) {
+function roomDevices(room: Room) {
     return devices.filter(d => d.room === room);
 }
 
@@ -9,7 +9,7 @@ function randomItem<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]!;
 }
 
-export function personEntered(room: room) {
+export function personEntered(room: Room) {
     const list = roomDevices(room);
     const lights = list.filter(d => d.type === "light");
     const fans = list.filter(d => d.type === "fan");
@@ -44,7 +44,7 @@ export function personEntered(room: room) {
     }
 }
 
-export function personLeft(room: room) {
+export function personLeft(room: Room) {
     const list = roomDevices(room);
 
     const chance = Math.random();
@@ -71,7 +71,7 @@ export function personLeft(room: room) {
     }
 }
 
-export function idle(room: room) {
+export function idle(room: Room) {
     const chance = Math.random();
 
     if (chance < 0.8) {

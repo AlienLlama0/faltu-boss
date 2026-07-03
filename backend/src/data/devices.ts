@@ -1,4 +1,4 @@
-export interface device {
+export interface Device {
   id: number;
   room: "drawing-room-1" | "working-room-1" | "working-room-2";
   name: string;
@@ -8,7 +8,7 @@ export interface device {
   lastChanged: Date;
 }
 
-export const devices: device[] = [
+export const devices: Device[] = [
   {
     id: 1,
     room: "drawing-room-1",
